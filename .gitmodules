@@ -1,0 +1,4 @@
+[submodule "AWE/vendor/glfw"]
+	path = AWE/vendor/glfw
+	url = https://github.com/asu4net/glfw.git
+	branch = AWE
