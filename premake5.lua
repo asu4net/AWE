@@ -14,6 +14,7 @@ configurations
 IncludeDir = {}
 
 IncludeDir["AWE_SRC"] = "AWE/src"
+IncludeDir["SPDLOG"] = "AWE/vendor/spdlog/include"
 IncludeDir["GLFW"] = "AWE/vendor/glfw/include"
 
 -- Output directory
@@ -41,7 +42,8 @@ project "AWE"
     includedirs
     {
         "%{IncludeDir.AWE_SRC}",
-        "%{IncludeDir.GLFW}"
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.SPDLOG}"
     }
 
     links
@@ -89,7 +91,8 @@ project "Game"
 
     includedirs
     {
-        "%{IncludeDir.AWE_SRC}"
+        "%{IncludeDir.AWE_SRC}",
+        "%{IncludeDir.SPDLOG}"
     }
 
     links

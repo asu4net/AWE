@@ -1,5 +1,5 @@
 #pragma once
-#include "AWEpch.h"
+#include "AWE/Log/Log.h"
 
 namespace AWE
 {
@@ -93,8 +93,8 @@ namespace AWE
 				m_Listeners.erase(it);
 				return;
 			}
-				
-			LOG("Listener not found."); //TODO: Use the future Logging System.
+			
+			LOG_WARN("Listener not found."); //TODO: Use the future Logging System.
 		}
 
 		//Removes all the Event subscriptions.

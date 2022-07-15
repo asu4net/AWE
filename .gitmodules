@@ -2,3 +2,6 @@
 	path = AWE/vendor/glfw
 	url = https://github.com/asu4net/glfw.git
 	branch = AWE
+[submodule "AWE/vendor/spdlog"]
+	path = AWE/vendor/spdlog
+	url = https://github.com/gabime/spdlog.git

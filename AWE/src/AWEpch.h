@@ -28,4 +28,3 @@ using vector = std::vector<T>;
 
 //--- Defines ---
 #define MAKE_PTR std::make_shared
-#define LOG(x) std::cout << x << std::endl

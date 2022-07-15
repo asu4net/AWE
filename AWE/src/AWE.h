@@ -5,3 +5,4 @@
 #include "AWE/Core/EntryPoint.h"
 #include "AWE/Core/Application.h"
 #include "AWE/Event/Event.h"
+#include "AWE/Log/Log.h"
