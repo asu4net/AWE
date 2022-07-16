@@ -7,7 +7,7 @@ namespace AWE
 	{
 	public:
 		Application();
-		~Application();
+		virtual ~Application();
 
 		virtual void Start();
 	};

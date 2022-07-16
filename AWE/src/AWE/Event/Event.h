@@ -5,7 +5,7 @@ namespace AWE
 {
 	//Add Listener macro...
 
-	//Suscribes t_function to the Event.
+	//Subscribes t_function to the Event.
 	#define ADD_LISTENER(TSubscriber, ListenerMethod) AddListener(this, &TSubscriber::ListenerMethod)
 
 	template<class TArgs>
@@ -23,7 +23,7 @@ namespace AWE
 		int index = -1;
 		Method<TArgs> method;
 
-		Listener(int t_index, Method<TArgs> t_method)
+		Listener(const int t_index, Method<TArgs> t_method)
 			: index(t_index), method(t_method) {}
 
 		bool operator==(const Listener& other)
@@ -37,25 +37,25 @@ namespace AWE
 	/// The class that sends(or raises) the Event is called the Publisher and the classes that receive(or handle) the
 	/// Event are called Subscribers. The Publisher notifies through calling Subscriber methods called Listeners.
 	/// So the Event class just stores and manages a vector of Listeners (class methods).
-	/// It ONLY suports class member functions.
+	/// It ONLY supports class member functions.
 	/// </summary>
-	template<class TArgs>
+	template<typename TArgs>
 	class Event
 	{
 	private:
-		vector<Listener<TArgs>> m_Listeners;
-		int m_Count = 0;
+		Vector<Listener<TArgs>> m_listeners;
+		int m_count = 0;
 
-		template<class TArgs>
-		using ListenerIterator = typename vector<Listener<TArgs>>::iterator;
+		template<typename TArgs>
+		using ListenerIterator = typename Vector<Listener<TArgs>>::iterator;
 
-		//Check if the given Listener is suscribed.
-		bool HasListener(Listener<TArgs> t_Listener, ListenerIterator<TArgs>& t_it)
+		//Check if the given Listener is subscribed.
+		bool HasListener(Listener<TArgs> t_listener, ListenerIterator<TArgs>& t_it)
 		{
-			t_it = std::find_if(m_Listeners.begin(), m_Listeners.end(),
-				[t_Listener](Listener<TArgs>& i_Listener) { return t_Listener == i_Listener; });
+			t_it = std::find_if(m_listeners.begin(), m_listeners.end(),
+				[t_listener](Listener<TArgs>& i_listener) { return t_listener == i_listener; });
 
-			if (t_it == m_Listeners.end())
+			if (t_it == m_listeners.end())
 				return false;
 
 			return true;
@@ -67,30 +67,28 @@ namespace AWE
 		Event(Event&& other) = delete;
 		~Event() { RemoveAllListeners(); }
 
-		//Suscribes t_function to the Event.
+		//Subscribes t_function to the Event.
 		template<class TSubscriber>
-		Listener<TArgs> AddListener(TSubscriber* t_Subscriber, void (TSubscriber::* t_function)(TArgs))
+		Listener<TArgs> AddListener(TSubscriber* t_subscriber, void (TSubscriber::* t_function)(TArgs))
 		{
-			Listener<TArgs> listener = m_Listeners.emplace_back(m_Count, std::bind(t_function, t_Subscriber, std::placeholders::_1));
-			m_Count++;
+			Listener<TArgs> listener = m_listeners.emplace_back(m_count, std::bind(t_function, t_subscriber, std::placeholders::_1));
+			m_count++;
 			return listener;
 		}
 
-		//Check if the given Listener is suscribed.
-		bool HasListener(Listener<TArgs> t_Listener)
+		//Check if the given Listener is subscribed.
+		bool HasListener(Listener<TArgs> t_listener)
 		{
 			ListenerIterator<TArgs> it;
-			return HasListener(t_Listener, it);
+			return HasListener(t_listener, it);
 		}
 
 		//Unsubscribes t_function from the Event.
-		void RemoveListener(Listener<TArgs> t_Listener)
+		void RemoveListener(Listener<TArgs> t_listener)
 		{
-			ListenerIterator<TArgs> it;
-
-			if (HasListener(t_Listener, it))
+			if (ListenerIterator<TArgs> it; HasListener(t_listener, it))
 			{
-				m_Listeners.erase(it);
+				m_listeners.erase(it);
 				return;
 			}
 			
@@ -98,13 +96,13 @@ namespace AWE
 		}
 
 		//Removes all the Event subscriptions.
-		void RemoveAllListeners() { m_Listeners.clear(); }
+		void RemoveAllListeners() { m_listeners.clear(); }
 
 		//Fires the event and dispatches a TArgs instance.
-		void Invoke(TArgs t_Args)
+		void Invoke(TArgs t_args)
 		{
-			for (Listener listener : m_Listeners)
-				listener.method(t_Args);
+			for (const Listener<TArgs>& listener : m_listeners)
+				listener.method(t_args);
 		}
 	};
 }

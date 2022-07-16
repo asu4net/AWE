@@ -7,7 +7,7 @@
 
 int main()
 {
-	auto app = AWE::CreateApplication();
+	const auto app = AWE::CreateApplication();
 	app->Start();
 	delete app;
 	

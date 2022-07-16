@@ -18,13 +18,13 @@
 
 //--- Custom types ---
 template<typename T>
-using ptr = std::shared_ptr<T>;
+using Ptr = std::shared_ptr<T>;
 
 template<typename T>
-using string = std::string;
+using String = std::string;
 
 template<typename T>
-using vector = std::vector<T>;
+using Vector = std::vector<T>;
 
 //--- Defines ---
 #define MAKE_PTR std::make_shared
